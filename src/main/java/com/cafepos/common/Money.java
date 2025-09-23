@@ -4,18 +4,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 
-/**
- * Value object for currency with 2-decimal precision.
- * Immutable and enforces non-negative amounts.
- */
 public final class Money implements Comparable<Money> {
     private final BigDecimal amount;
-
-    /**
-     * Create a Money from a double.
-     * - Validates value >= 0
-     * - Stores with scale(2, HALF_UP)
-     */
     public static Money of(double value) {
         if (value < 0) {
             throw new IllegalArgumentException("Money cannot be negative");
@@ -23,7 +13,6 @@ public final class Money implements Comparable<Money> {
         return new Money(BigDecimal.valueOf(value));
     }
 
-    /** Return a Money representing 0.00 */
     public static Money zero() {
         return new Money(BigDecimal.ZERO);
     }
