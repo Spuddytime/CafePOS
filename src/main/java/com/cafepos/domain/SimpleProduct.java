@@ -8,9 +8,12 @@ public final class SimpleProduct implements Product {
     private final Money basePrice;
 
     public SimpleProduct(String id, String name, Money basePrice) {
+        if (id == null || id.isBlank()) throw new IllegalArgumentException("id required");
+        if (name == null || name.isBlank()) throw new IllegalArgumentException("name required");
+        if (basePrice == null) throw new IllegalArgumentException("basePrice required");
         this.id = id;
         this.name = name;
-        this.basePrice = basePrice;
+        this.basePrice = basePrice; // Money already blocks negatives
     }
 
     @Override public String id() { return id; }
