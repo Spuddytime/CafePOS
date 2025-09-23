@@ -15,5 +15,6 @@ Keeps code realistic you don't go into a shop and order -3 oranges so it just ma
 Did composition (Order has LineItem) feel more natural than inheritance? Why or why not?
 Yes. An order has many line items, but it is not a kind of line item.
 Composition models the real-world relationship better.
-It keeps classes flexible: new products or pricing rules can be added without changing the inheritance hierarchy.
-It makes the system easier to extend later with patterns (Decorator, Strategy, etc.).
+Using composition also keeps things flexible: the order handles totals, tax, and receipt logic,
+ while each line item just cares about its product and quantity.
+ It makes the system easier to extend later with patterns (Decorator, Strategy, etc.).
