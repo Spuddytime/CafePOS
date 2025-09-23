@@ -38,12 +38,11 @@ public final class Order {
     }
 
     public Money taxAtPercent(int percent) {
-        // TODO: percent >= 0; tax = subtotal * percent / 100 (Money result)
-        throw new UnsupportedOperationException("TODO: Order.taxAtPercent");
+        return subtotal().percent(percent);
     }
 
     public Money totalWithTax(int percent) {
-        // TODO: return subtotal().add(taxAtPercent(percent))
-        throw new UnsupportedOperationException("TODO: Order.totalWithTax");
+        return subtotal().add(taxAtPercent(percent));
     }
+
 }

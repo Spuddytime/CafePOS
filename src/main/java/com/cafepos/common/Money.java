@@ -48,6 +48,14 @@ public final class Money implements Comparable<Money> {
         return new Money(this.amount.multiply(BigDecimal.valueOf(qty)));
     }
 
+    public Money percent(int percent) {
+        if (percent < 0) throw new IllegalArgumentException("percent cannot be negative");
+        return new Money(this.amount
+                .multiply(BigDecimal.valueOf(percent))
+                .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP));
+    }
+
+
     @Override
     public int compareTo(Money o) {
         return this.amount.compareTo(o.amount);
