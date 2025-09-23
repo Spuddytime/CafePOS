@@ -2,56 +2,71 @@ package com.cafepos.common;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Objects;
 
 /**
  * Value object for currency with 2-decimal precision.
- * TODO: make immutable and enforce non-negative amounts.
+ * Immutable and enforces non-negative amounts.
  */
 public final class Money implements Comparable<Money> {
     private final BigDecimal amount;
 
     /**
-     * TODO:
-     *  - validate value >= 0
-     *  - store using BigDecimal with scale(2, HALF_UP)
+     * Create a Money from a double.
+     * - Validates value >= 0
+     * - Stores with scale(2, HALF_UP)
      */
     public static Money of(double value) {
-        throw new UnsupportedOperationException("TODO: Money.of");
+        if (value < 0) {
+            throw new IllegalArgumentException("Money cannot be negative");
+        }
+        return new Money(BigDecimal.valueOf(value));
     }
 
-    /** TODO: return a Money representing 0.00 */
+    /** Return a Money representing 0.00 */
     public static Money zero() {
-        throw new UnsupportedOperationException("TODO: Money.zero");
+        return new Money(BigDecimal.ZERO);
     }
 
     private Money(BigDecimal a) {
         if (a == null) throw new IllegalArgumentException("amount required");
-        // TODO: enforce a >= 0
-        // TODO: ensure scale(2) with HALF_UP rounding when assigning to field
-        this.amount = a.setScale(2, RoundingMode.HALF_UP); // keep, but add invariant checks above
+        if (a.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Money cannot be negative");
+        }
+        this.amount = a.setScale(2, RoundingMode.HALF_UP);
     }
 
-    /** TODO: return new Money = this + other */
+    /** Return new Money = this + other */
     public Money add(Money other) {
-        throw new UnsupportedOperationException("TODO: Money.add");
+        if (other == null) throw new IllegalArgumentException("other required");
+        return new Money(this.amount.add(other.amount));
     }
 
-    /** TODO: return new Money = this * qty (qty >= 0) */
+    /** Return new Money = this * qty (qty >= 0) */
     public Money multiply(int qty) {
-        throw new UnsupportedOperationException("TODO: Money.multiply");
+        if (qty < 0) throw new IllegalArgumentException("quantity cannot be negative");
+        return new Money(this.amount.multiply(BigDecimal.valueOf(qty)));
     }
 
-    // TODO: equals, hashCode, toString as needed by tests
-    @Override public int compareTo(Money o) {
-        throw new UnsupportedOperationException("TODO: Money.compareTo");
+    @Override
+    public int compareTo(Money o) {
+        return this.amount.compareTo(o.amount);
     }
-    @Override public boolean equals(Object obj) {
-        return super.equals(obj); // TODO: implement value equality on amount
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Money other)) return false;
+        return this.amount.compareTo(other.amount) == 0;
     }
-    @Override public int hashCode() {
-        return super.hashCode(); // TODO
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount);
     }
-    @Override public String toString() {
-        return amount.toString(); // OK for now
+
+    @Override
+    public String toString() {
+        return amount.toString();
     }
 }

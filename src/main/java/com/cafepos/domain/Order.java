@@ -22,8 +22,13 @@ public final class Order {
     public List<LineItem> items() { return Collections.unmodifiableList(items); }
 
     public void addItem(LineItem li) {
-        // TODO: validations, then items.add(li)
-        throw new UnsupportedOperationException("TODO: Order.addItem");
+        if (li == null) {
+            throw new IllegalArgumentException("lineItem required");
+        }
+        if (li.quantity() <= 0) {
+            throw new IllegalArgumentException("quantity must be > 0");
+        }
+        items.add(li);
     }
 
     public Money subtotal() {
