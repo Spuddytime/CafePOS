@@ -6,12 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * TODOs:
- *  - addItem: validate li != null and li.quantity() > 0
- *  - taxAtPercent: compute subtotal * (percent / 100), round to 2 decimals
- *  - totalWithTax: subtotal + tax
- */
 public final class Order {
     private final long id;
     private final List<LineItem> items = new ArrayList<>();
