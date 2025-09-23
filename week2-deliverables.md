@@ -1,6 +1,6 @@
-# Week 2 — Café POS Foundations (OOD)
+# Week 2 — Café POS 
 
-> I missed the first lab due to personal circumstances, so I did not have a partner for this section of the lab.
+> I missed the first lab due to personal circumstances, so I did not have a partner for this section of the lab apologies.
 
 ---
 
