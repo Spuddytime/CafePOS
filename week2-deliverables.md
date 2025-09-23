@@ -41,3 +41,32 @@ I am also a little unfamilar with UML in general so needed to look at a few exam
 (Needed some help from Gen AI to generate the initial sketch it was also used in the creation of this Markdown File)
 
 ---
+
+## Demo Run (CLI Output)
+
+*Screenshot of terminal running `Week2Demo`:*
+
+![img_1.png](img_1.png)
+
+---
+
+## JUnit Test Proof
+
+### MoneyTests
+*Screenshot of terminal or IntelliJ showing all `MoneyTests` passing:*
+
+![img_2.png](img_2.png)
+
+### OrderTotalsTest
+*Screenshot of terminal or IntelliJ showing `OrderTotalsTest` passing:*
+
+![img_3.png](img_3.png)
+
+---
+
+## Included Deliverables
+
+1. Complete, compilable codebase in `src/main/java` and `src/test/java`.
+2. Demo run proof (screenshot above).
+3. JUnit test cases proof (screenshots above).
+4. UML sketch (`diagram.png`) and written answers (this file).  
