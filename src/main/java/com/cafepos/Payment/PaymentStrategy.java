@@ -7,3 +7,4 @@ import com.cafepos.domain.Order;
         void pay(Order order);
     }
 
+
