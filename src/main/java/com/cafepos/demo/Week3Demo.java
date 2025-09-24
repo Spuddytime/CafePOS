@@ -6,6 +6,7 @@ import com.cafepos.common.Money;
 import com.cafepos.domain.*;
 import com.cafepos.Payment.CashPayment;
 import com.cafepos.Payment.CardPayment;
+import com.cafepos.Payment.WalletPayment;
 
 public final class Week3Demo {
     public static void main(String[] args) {
@@ -26,5 +27,12 @@ public final class Week3Demo {
         order2.addItem(new LineItem(catalog.findById("P-CCK").orElseThrow(), 1));
         System.out.println("Order #" + order2.id() + " Total: " + order2.totalWithTax(10));
         order2.pay(new CardPayment("1234 5678 1234 1234"));
+
+        // Wallet payment
+        Order order3 = new Order(OrderIds.next());
+        order3.addItem(new LineItem(catalog.findById("P-ESP").orElseThrow(), 2));
+        order3.addItem(new LineItem(catalog.findById("P-CCK").orElseThrow(), 1));
+        System.out.println("Order #" + order3.id() + " Total: " + order3.totalWithTax(10));
+        order3.pay(new WalletPayment("alice-wallet-01"));
     }
 }
