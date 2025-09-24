@@ -1,6 +1,7 @@
 package com.cafepos.domain;
 
 import com.cafepos.common.Money;
+import com.cafepos.Payment.PaymentStrategy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,6 +38,12 @@ public final class Order {
 
     public Money totalWithTax(int percent) {
         return subtotal().add(taxAtPercent(percent));
+    }
+
+    //Adding my payment strategy exception to make sure we have a method
+    public void pay(PaymentStrategy strategy) {
+        if (strategy == null) throw new IllegalArgumentException("strategy required");
+        strategy.pay(this);
     }
 
 }
