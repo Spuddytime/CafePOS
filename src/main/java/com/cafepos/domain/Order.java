@@ -46,4 +46,33 @@ public final class Order {
         strategy.pay(this);
     }
 
+    // 1) Maintain subscriptions
+    private final List<OrderObserver> observers = new
+            ArrayList<>();
+    public void register(OrderObserver o) {
+// TODO: add null check and add the observer
+    }
+    public void unregister(OrderObserver o) {
+// TODO: remove the observer if present
+    }
+    // 2) Publish events
+    private void notifyObservers(String eventType) {
+// TODO: iterate observers and call updated(this,
+        eventType)
+    }
+    // 3) Hook notifications into existing behaviors
+    @Override
+    public void addItem(LineItem li) {
+// TODO: call super/add to items and then
+        notifyObservers("itemAdded")
+    }
+    @Override
+    public void pay(PaymentStrategy strategy) {
+// TODO: delegate to strategy as before, then
+        notifyObservers("paid")
+    }
+    public void markReady() {
+// TODO: just publish notifyObservers("ready")
+    }
+
 }
