@@ -46,7 +46,7 @@ public final class Order {
         strategy.pay(this);
     }
 
-    // 1) Maintain subscriptions
+    // 1) Maintain subscriptions WEEK 4 WORK
     private final List<OrderObserver> observers = new
             ArrayList<>();
     public void register(OrderObserver o) {
