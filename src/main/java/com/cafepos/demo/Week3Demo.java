@@ -7,10 +7,10 @@ import com.cafepos.domain.*;
 import com.cafepos.Payment.CashPayment;
 import com.cafepos.Payment.CardPayment;
 import com.cafepos.Payment.WalletPayment;
-
+//
 public final class Week3Demo {
     public static void main(String[] args) {
-        Catalog catalog = new InMemoryCatalog();
+        Catalog catalog = new InMemoryCatalog(); //Week 2 Demo flagging Dupe
         catalog.add(new SimpleProduct("P-ESP", "Espresso", Money.of(2.50)));
         catalog.add(new SimpleProduct("P-CCK", "Chocolate Cookie", Money.of(3.50)));
 
