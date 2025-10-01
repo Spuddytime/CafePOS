@@ -32,3 +32,9 @@ This week extends the Café POS system by adding support for multiple, interchan
 ## UML Output (screenshot)
 
 ![Week3UML.png](Week3UML.png)
+
+## Explanation of Behaviours
+- Inheritance (is-a): CardPayment is a kind of PaymentStrategy.
+- Composition (has-a): Order has many LineItems, which each have a Product and a quantity.
+- Interfaces (contracts): PaymentStrategy promises that any payment method will have a pay() method,
+- even though each strategy does it differently.
