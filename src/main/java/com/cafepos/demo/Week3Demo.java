@@ -22,9 +22,7 @@ public final class Week3Demo {
 
         int taxPct = 10;
 
-        // =========================
         // Part A: Different orders, different strategies
-        // =========================
 
         // Cash payment
         Order cashOrder = new Order(OrderIds.next());
@@ -47,9 +45,7 @@ public final class Week3Demo {
         System.out.println("Order #" + walletOrder.id() + " Total: " + walletOrder.totalWithTax(taxPct));
         walletOrder.pay(new WalletPayment("demo-wallet-01"));
 
-        // =========================
         // Part B: Same order, multiple strategies (Reflection Q2)
-        // =========================
         Order sameOrder = new Order(OrderIds.next());
         sameOrder.addItem(new LineItem(catalog.findById("P-ESP").orElseThrow(), 2));
         sameOrder.addItem(new LineItem(catalog.findById("P-CCK").orElseThrow(), 1));
