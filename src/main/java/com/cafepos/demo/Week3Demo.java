@@ -4,7 +4,7 @@ import com.cafepos.catalog.Catalog;
 import com.cafepos.catalog.InMemoryCatalog;
 import com.cafepos.common.Money;
 import com.cafepos.domain.*;
-import com.cafepos.payment.*;
+import com.cafepos.Payment.*;
 
 public final class Week3Demo {
 
@@ -45,7 +45,7 @@ public final class Week3Demo {
         walletOrder.addItem(new LineItem(catalog.findById("P-ESP").orElseThrow(), 2));
         walletOrder.addItem(new LineItem(catalog.findById("P-CCK").orElseThrow(), 1));
         System.out.println("Order #" + walletOrder.id() + " Total: " + walletOrder.totalWithTax(taxPct));
-        walletOrder.pay(new WalletPayment("alice-wallet-01"));
+        walletOrder.pay(new WalletPayment("demo-wallet-01"));
 
         // =========================
         // Part B: Same order, multiple strategies (Reflection Q2)
@@ -58,6 +58,6 @@ public final class Week3Demo {
         // Reflection Q2: same Order instance, different strategies — Order code unchanged.
         sameOrder.pay(new CashPayment());
         sameOrder.pay(new CardPayment("9999 8888 7777 1234"));
-        sameOrder.pay(new WalletPayment("demo-wallet-42"));
+        sameOrder.pay(new WalletPayment("demo-wallet-02"));
     }
 }
