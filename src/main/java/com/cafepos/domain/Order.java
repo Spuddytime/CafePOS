@@ -45,7 +45,6 @@ public final class Order {
         if (strategy == null) throw new IllegalArgumentException("strategy required");
         strategy.pay(this);
     }
-
     // 1) Maintain subscriptions WEEK 4 WORK
     private final List<OrderObserver> observers = new
             ArrayList<>();
