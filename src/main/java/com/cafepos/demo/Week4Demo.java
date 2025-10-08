@@ -7,7 +7,7 @@ import com.cafepos.Payment.CashPayment;
 public final class Week4Demo {
     public static void main(String[] args) {
         // Create a simple product and order
-        var espresso = new SimpleProduct("P-ESP", "Espresso", Money.of(2.50));
+        var espresso = new SimpleProduct("P-ESP", "Espresso", Money.of(2.50)); //Implement an interface not hardcode it
         var order = new Order(1005);
 
         // Register the three observers

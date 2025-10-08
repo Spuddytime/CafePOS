@@ -52,4 +52,4 @@ This week extends the Café POS system by adding the **Observer pattern**, enabl
 
 * **Decoupling:** `Order` doesn’t need to know how Kitchen, Delivery, or Customer components behave; it just announces facts.
 * **Open/Closed Principle:** New observers (like `LoyaltyNotifier` or `AuditLogger`) can be added without editing `Order`.
-* **Real-world Analogy:** Similar to GUI event listeners or push notifications — one source, many independent reactions.
+* **Real-world Analogy:** Similar to GUI event listeners or push notifications one source, many independent reactions.
