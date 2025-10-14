@@ -1,11 +1,20 @@
 package com.cafepos.decorator;
-import com.cafepos.common.Priced;
+
 import com.cafepos.domain.Product;
 import com.cafepos.common.Money;
+import com.cafepos.common.Priced;
 
-public final class ExtraShot extends ProductDecorator {
+public final class ExtraShot extends ProductDecorator implements Priced {
     private static final Money SURCHARGE = Money.of(0.80);
+
     public ExtraShot(Product base) { super(base); }
-    @Override public String name() { return base.name() + " + Extra Shot"; }
-    public Money price() { return (base instanceof Priced p ? p.price() : base.basePrice()).add(SURCHARGE); }
+
+    @Override public String name() {
+        return base.name() + " + Extra Shot";
+    }
+
+    @Override public Money price() {
+        Money unit = (base instanceof Priced p) ? p.price() : base.basePrice();
+        return unit.add(SURCHARGE);
+    }
 }
