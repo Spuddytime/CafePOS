@@ -1,7 +1,7 @@
 package com.cafepos.domain;
 
 import com.cafepos.common.Money;
-
+import com.cafepos.common.Priced;
 /**
  * Provided scaffold: quantity must be > 0.
  */
@@ -19,6 +19,11 @@ public final class LineItem {
     public int quantity() { return quantity; }
 
     public Money lineTotal() {
-        return product.basePrice().multiply(quantity);
+        // Week 5 change — use price() if product implements Priced
+        Money unit = (product instanceof Priced p)
+                ? p.price()
+                : product.basePrice();
+        return unit.multiply(quantity); //Trying to keep open/closed principle here
     }
 }
+

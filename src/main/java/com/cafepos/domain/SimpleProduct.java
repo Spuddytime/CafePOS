@@ -1,8 +1,8 @@
 package com.cafepos.domain;
 
 import com.cafepos.common.Money;
-
-public final class SimpleProduct implements Product {
+import com.cafepos.common.Priced; //Week 5 work creeping in :(
+public final class SimpleProduct implements Product, Priced {  // now also implements Priced
     private final String id;
     private final String name;
     private final Money basePrice;
@@ -13,10 +13,15 @@ public final class SimpleProduct implements Product {
         if (basePrice == null) throw new IllegalArgumentException("basePrice required");
         this.id = id;
         this.name = name;
-        this.basePrice = basePrice; // Money already blocks negatives
+        this.basePrice = basePrice;
     }
 
     @Override public String id() { return id; }
     @Override public String name() { return name; }
     @Override public Money basePrice() { return basePrice; }
+
+    // Week 5 addition
+    @Override public Money price() {
+        return basePrice;
+    }
 }
