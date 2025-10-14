@@ -74,7 +74,7 @@ Assertions:
 - orders have equal `subtotal` and `totalWithTax(10)`
 
 ## Demo Output
-![Week4Demo.png](Week4Demo.png)
+![Week4Demo.png](Week5Demo.png)
 ## UML Diagram
 
 ![Week5UML.png](Week5UML.png)
