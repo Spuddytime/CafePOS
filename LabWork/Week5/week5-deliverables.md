@@ -42,6 +42,53 @@ This week extends the Café POS by adding **Decorator** (to stack add-ons onto a
 
 ---
 
-## JUnit Tests
+## JUnit Tests (what they prove)
 
+1. **`decorator_single_addon()`**  
+   *Builds `Espresso` + `ExtraShot`.*  
+   Verifies:
+    - `name()` is **"Espresso + Extra Shot"**
+    - `price()` is **3.30** (2.50 + 0.80)
+
+2. **`decorator_stacks()`**  
+   *Chains `SizeLarge(OatMilk(ExtraShot(Espresso)))`.*  
+   Verifies:
+    - `name()` is **"Espresso + Extra Shot + Oat Milk (Large)"**
+    - `price()` is **4.50** (2.50 + 0.80 + 0.50 + 0.70)
+
+3. **`factory_parses_recipe()`**  
+   *Uses `new ProductFactory().create("ESP+SHOT+OAT")`.*  
+   Verifies:
+    - final `name()` contains **"Espresso"** and **"Oat Milk"**
+
+4. **`order_uses_decorated_price()`**  
+   *Adds two × (Espresso + Extra Shot) to an order.*  
+   Verifies:
+    - `subtotal()` is **6.60** (2 × 3.30)
+
+**Activity — Factory vs. Manual (separate test class)**  
+Build `"ESP+SHOT+OAT+L"` via factory **and** by manual wrapping.  
+Assertions:
+- same `name()`
+- same `price()`
+- orders have equal `subtotal` and `totalWithTax(10)`
+
+## Demo Output
+![Week4Demo.png](Week4Demo.png)
+## UML Diagram
+
+![Week5UML.png](Week5UML.png)
+ ---
+
+## Reflection
+
+This week introduced a minimal `Priced` interface so both `SimpleProduct` and all decorators expose a uniform `price()` method.
+
+With that in place, `LineItem` calculates totals using `(product instanceof Priced ? price() : basePrice())`. This keeps the ordering logic closed for modification while still allowing new add-ons to be added freely (OCP).
+
+Each decorator composes behavior by delegating to its wrapped product’s `price()` and then adding a surcharge via `Money.add()`. Stacking remains simple and numerically correct.
+
+The `ProductFactory` centralizes construction from short recipes (e.g., `ESP+SHOT+OAT+L`), so application code never needs to know constructors or chaining order.
+
+To add a new add-on next week, I would implement a new `ProductDecorator` with its label/surcharge and add a single token in the factory—no changes to existing classes.
 
