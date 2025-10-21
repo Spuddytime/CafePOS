@@ -5,19 +5,22 @@ import com.cafepos.factory.ProductFactory;
 import com.cafepos.domain.Product;
 
 public class OrderManagerGod {
-    // Globals
+
+    // smell: shared global setting (other code can change this unexpectedly)
     public static int TAX_PERCENT = 10;
+
+    // smell: shared global flag (last code used lives in a global spot)
     public static String LAST_DISCOUNT_CODE = null;
 
-    // This is quite along method its doing too much
+    // smell: one huge method doing many jobs (make product, price it, discount, tax, payment, and print)
     public static String process(String recipe, int qty, String paymentType,
                                  String discountCode, boolean printReceipt) {
 
-        // creates products directly instead of delegating to a service
+        // smell: this method builds the product itself (should be given a helper instead of 'new' here)
         ProductFactory factory = new ProductFactory();
         Product product = factory.create(recipe);
 
-        // Get unit price (prefer price() when available, else basePrice())
+        // smell: type check and fallback logic lives here; ties this method to low-level details
         Money unitPrice;
         try {
             var priced = product instanceof com.cafepos.common.Priced p ? p.price() : product.basePrice();
@@ -26,40 +29,41 @@ public class OrderManagerGod {
             unitPrice = product.basePrice();
         }
 
-        // Guard quantity: 0 or negative becomes 1
+        // smell: hidden rule; quantity 0 or less becomes 1 (business rule buried in a big method)
         if (qty <= 0) qty = 1;
 
         Money subtotal = unitPrice.multiply(qty);
 
-        // Duplicated logic + Primitive Obsession (codes as strings)
+        // smell: discount is driven by raw strings and hard-coded numbers
         Money discount = Money.zero();
         if (discountCode != null) {
-            if (discountCode.equalsIgnoreCase("LOYAL5")) {
+            if (discountCode.equalsIgnoreCase("LOYAL5")) {   // 5% is baked into the code
                 discount = Money.of(subtotal.asBigDecimal()
                         .multiply(java.math.BigDecimal.valueOf(5))
                         .divide(java.math.BigDecimal.valueOf(100)));
-            } else if (discountCode.equalsIgnoreCase("COUPON1")) {
+            } else if (discountCode.equalsIgnoreCase("COUPON1")) { // €1 is baked into the code
                 discount = Money.of(1.00);
             } else if (discountCode.equalsIgnoreCase("NONE")) {
                 discount = Money.zero();
             } else {
                 discount = Money.zero();
             }
-            LAST_DISCOUNT_CODE = discountCode;                          // Global mutable state (smell)
+            // smell: remembers last code in a global place
+            LAST_DISCOUNT_CODE = discountCode;
         }
 
-        // More scattered BigDecimal math (duplication)
+        // smell: repeated low-level money math scattered here
         Money discounted = Money.of(subtotal.asBigDecimal().subtract(discount.asBigDecimal()));
         if (discounted.asBigDecimal().signum() < 0) discounted = Money.zero();
 
-        // risk: tax calc inline; depends on TAX_PERCENT global
+        // smell: tax math is inlined and depends on the global percentage
         var tax = Money.of(discounted.asBigDecimal()
                 .multiply(java.math.BigDecimal.valueOf(TAX_PERCENT))
                 .divide(java.math.BigDecimal.valueOf(100)));
 
-        var total = discounted.add(tax); //Final Total
+        var total = discounted.add(tax);
 
-        // Optional payment trace to console
+        // smell: big if/else on strings to decide payment behavior (grows every time a new type is added)
         if (paymentType != null) {
             if (paymentType.equalsIgnoreCase("CASH")) {
                 System.out.println("[Cash] Customer paid " + total + " EUR");
@@ -72,7 +76,7 @@ public class OrderManagerGod {
             }
         }
 
-        // Build receipt text
+        // smell: building the receipt text and printing are mixed into the core logic
         StringBuilder receipt = new StringBuilder();
         receipt.append("Order (").append(recipe).append(") x").append(qty).append("\n");
         receipt.append("Subtotal: ").append(subtotal).append("\n");
