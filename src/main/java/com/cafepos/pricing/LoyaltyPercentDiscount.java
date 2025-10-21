@@ -7,7 +7,9 @@ import java.math.BigDecimal;
 public final class LoyaltyPercentDiscount implements DiscountPolicy {
     private final int percent;
     public LoyaltyPercentDiscount(int percent) {
+
         if (percent < 0) throw new IllegalArgumentException("percent >= 0");
+
         this.percent = percent;
     }
     @Override public Money discountOf(Money subtotal) {

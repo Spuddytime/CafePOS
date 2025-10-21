@@ -7,7 +7,9 @@ import java.math.BigDecimal;
 public final class FixedRateTaxPolicy implements TaxPolicy {
     private final int percent;
     public FixedRateTaxPolicy(int percent) {
+
         if (percent < 0) throw new IllegalArgumentException("percent >= 0");
+
         this.percent = percent;
     }
     public int percent() { return percent; }
