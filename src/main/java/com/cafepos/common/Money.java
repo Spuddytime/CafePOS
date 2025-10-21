@@ -6,11 +6,21 @@ import java.util.Objects;
 
 public final class Money implements Comparable<Money> {
     private final BigDecimal amount;
+
     public static Money of(double value) {
         if (value < 0) {
             throw new IllegalArgumentException("Money cannot be negative");
         }
         return new Money(BigDecimal.valueOf(value));
+    }
+
+    /** Factory from BigDecimal (scaled to 2dp, non-negative). */
+    public static Money of(BigDecimal value) {
+        if (value == null) throw new IllegalArgumentException("amount required");
+        if (value.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Money cannot be negative");
+        }
+        return new Money(value);
     }
 
     public static Money zero() {
@@ -37,6 +47,7 @@ public final class Money implements Comparable<Money> {
         return new Money(this.amount.multiply(BigDecimal.valueOf(qty)));
     }
 
+    /** Percent of this (e.g., 10 -> 10% of amount). */
     public Money percent(int percent) {
         if (percent < 0) throw new IllegalArgumentException("percent cannot be negative");
         return new Money(this.amount
@@ -44,6 +55,10 @@ public final class Money implements Comparable<Money> {
                 .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP));
     }
 
+    /** Needed by Week 6 pricing code for intermediate calculations. */
+    public BigDecimal asBigDecimal() {
+        return amount;
+    }
 
     @Override
     public int compareTo(Money o) {
