@@ -38,3 +38,34 @@
 
 ---
 
+### Step 4 – Replace `OrderManagerGod` with a tiny orchestrator
+- Added **`com.cafepos.checkout.CheckoutService`**.
+- Responsibilities:
+    - Build product via `ProductFactory`.
+    - Get unit price (decorated `Priced.price()` if present; else `basePrice()`).
+    - Compute subtotal and delegate to `PricingService` for discount→tax→total.
+    - Format the receipt using `ReceiptPrinter` so the text matches the baseline.
+- Public API used in demo/tests:
+    - `String checkout(String recipe, int qty)`
+- Commit:
+    - `refactor(orchestrator): add CheckoutService (no behavior change yet)`
+
+### Step 5 – Prove the clean path matches the smelly path (tests)
+- **Unit tests (new):**
+    - `DiscountPolicyTest` – verifies `NoDiscount`, `LoyaltyPercentDiscount(5)`, `FixedCouponDiscount(1.00)`.
+    - `TaxPolicyTest` – verifies `FixedRateTaxPolicy(10)` tax math.
+    - `PricingServiceTest` – verifies pipeline math from subtotal→discount→tax→total (e.g., 7.80→0.39→0.74→8.15).
+- **Parity test (optional but helpful):**
+    - `ParityTest` – builds receipts for the same input via:
+        - old: `OrderManagerGod.process(...)`
+        - new: `CheckoutService.checkout(...)`
+        - Asserts the strings are **identical**.
+- Commit(s):
+    - `test: add DiscountPolicyTest`
+    - `test: add TaxPolicyTest`
+    - `test: add PricingServiceTest`
+    - `test(optional): add ParityTest for receipt equality`
+
+### Step 6 – CLI parity demo (30-second proof)
+- **`com.cafepos.demo.Week6Demo`** (or **MidTermDemo**) prints both receipts and a `Match: true` line.
+
