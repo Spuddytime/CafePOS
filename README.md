@@ -32,6 +32,17 @@ You’ll find a clean domain model (Money, Products, Orders), pluggable **Paymen
 - `ProductFactory.create("ESP+SHOT+OAT+L")` builds drinks from recipe tokens.
 - CLI demo (`Week5Demo`) prints a receipt with decorated names and correct totals.
 
----
+### Week 6 — Refactor (Pricing seam + Orchestrator)
+- Locked current behavior with `Week6CharacterizationTests` (checks Subtotal/Discount/Tax/Total).
+- Identified smells in `OrderManagerGod` (comments only): long method, duplicated math, primitive obsession, global state.
+- Extracted pricing pieces:
+  - Discounts: `DiscountPolicy` + `NoDiscount`, `LoyaltyPercentDiscount`, `FixedCouponDiscount`
+  - Tax: `TaxPolicy` + `FixedRateTaxPolicy`
+  - Pipeline: `PricingService` (returns a `PricingResult`)
+  - Output: `ReceiptPrinter` (same receipt format)
+- Added small orchestrator `CheckoutService` (build via `ProductFactory`, compute subtotal, price, print).
+- Parity demo `Week6Demo`: old vs new **receipt text matches**.
+- Extra unit tests: discount policies, tax policy, and pricing pipeline.
+
 
 
