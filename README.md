@@ -1,7 +1,6 @@
 # Café POS
 
 A small, test-driven **Point of Sale** app for a café, built incrementally across labs.  
-You’ll find a clean domain model (Money, Products, Orders), pluggable **Payment Strategies** (Week 3), an **Observer** event flow (Week 4), and now **Decorator + Factory** for configurable drinks (Week 5).
 
 > **Tech:** Java 21 • Maven • JUnit 5 • PlantUML
 
