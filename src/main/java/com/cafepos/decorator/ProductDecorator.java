@@ -10,5 +10,4 @@ public abstract class ProductDecorator implements Product {
     }
     @Override public String id() { return base.id(); }             // keep base id
     @Override public Money basePrice() { return base.basePrice(); } // original price (not total)
-    // Concrete decorators override name() and may add a finalPrice()/price() helper.
 }
