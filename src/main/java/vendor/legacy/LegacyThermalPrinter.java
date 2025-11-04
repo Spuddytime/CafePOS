@@ -1,4 +1,4 @@
-package com.cafepos.vendor.legacy;
+package vendor.legacy;
 
 public final class LegacyThermalPrinter {
     public void legacyPrint(byte[] payload) {
