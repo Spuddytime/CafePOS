@@ -5,7 +5,7 @@ import com.cafepos.factory.ProductFactory;
 import com.cafepos.pricing.*;
 import com.cafepos.smells.OrderManagerGod;
 
-public final class Week6Demo {
+public final class  Week6Demo {
     public static void main(String[] args) {
         // Old (smelly) behavior
         String oldReceipt = OrderManagerGod.process("LAT+L", 2, "CARD", "LOYAL5", false);
