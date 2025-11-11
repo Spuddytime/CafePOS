@@ -14,7 +14,7 @@ public final class Menu extends MenuComponent {
         this.name = name;
     }
 
-    // --- composite ops ---
+    // --- composite operations ---
     @Override public void add(MenuComponent c) { children.add(c); }
     @Override public void remove(MenuComponent c) { children.remove(c); }
     @Override public MenuComponent getChild(int i) { return children.get(i); }
@@ -26,12 +26,13 @@ public final class Menu extends MenuComponent {
         return children.iterator();
     }
 
-    /** Depth-first iterator over the whole subtree. */
+    /** Depth-first iterator that starts at THIS menu. */
     @Override public Iterator<MenuComponent> iterator() {
-        return new CompositeIterator(childrenIterator());
+        // seed DFS with a one-element iterator over `this`
+        return new CompositeIterator(List.<MenuComponent>of(this).iterator());
     }
 
-    /** Print this section then all descendants. */
+    /** Print this section, then all descendants. */
     @Override public void print() {
         System.out.println(name);
         for (MenuComponent c : children) c.print();
