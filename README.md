@@ -6,6 +6,12 @@ A small, test-driven **Point of Sale** app for a café, built incrementally acro
 
 ---
 
+### Group 44
+
+-Stephen Walsh (21334234)
+
+-Piotr Pawlowski (21304858)
+
 ## ✨ What’s implemented so far
 
 ### Week 2 — Core Domain
@@ -43,5 +49,98 @@ A small, test-driven **Point of Sale** app for a café, built incrementally acro
 - Parity demo `Week6Demo`: old vs new **receipt text matches**.
 - Extra unit tests: discount policies, tax policy, and pricing pipeline.
 
+# Week 8 — Command + Adapter
+
+### Command Pattern
+- Added a generic `Command` interface (`execute()`, `undo()` default).
+- Created `OrderService` (Receiver) — a clean façade over `Order`, `ProductFactory`, `PaymentStrategy`.
+- Concrete commands:
+    - `AddItemCommand`
+    - `RemoveItemCommand` (via undo)
+    - `PayOrderCommand`
+    - **Optional:** `MacroCommand` (executes a sequence)
+- `PosRemote` acts as the **Invoker** with configurable slots and an **undo stack**.
+- `Week8Demo_Commands` shows:
+    - Press add item
+    - Press second add
+    - Undo
+    - Pay
+    - Undo removes last action only
+
+### Adapter Pattern
+- Defined `Printer` interface (target).
+- Legacy vendor printer: `LegacyThermalPrinter` (adaptee, accepts `byte[]`).
+- Adapter: `LegacyPrinterAdapter` converts text → bytes → legacy print.
+- `Week8Demo_Adapter` proves adapter works without modifying legacy code.
+
+---
+
+# Week 9 — Composite + Iterator + State
+
+### Composite Menu
+- `MenuComponent` abstract base (safe defaults throwing `UnsupportedOperationException`).
+- `MenuItem` leaf — name, price, vegetarian flag.
+- `Menu` composite — can contain menus or menu items.
+- Depth-first traversal using **`CompositeIterator`** (iterator-of-iterators stack).
+- `Week9Demo_Menu` prints full hierarchical café menu + lists **vegetarian items only**.
+
+### Iterator
+- Supports depth-first traversal over nested menus.
+- `vegetarianItems()` uses iteration + filtering (streams).
+
+### State Pattern
+- Implemented order lifecycle using **object-based states**, not if/else.
+- `OrderFSM` holds current `State` (NEW → PREPARING → READY → DELIVERED / CANCELLED).
+- States:
+    - `NewState`
+    - `PreparingState`
+    - `ReadyState`
+    - `DeliveredState`
+    - `CancelledState`
+- Illegal transitions print messages (e.g., “Cannot prepare before pay”).
+- `Week9Demo_State` shows lifecycle transitions working.
+
+### State Transition Table
+Summarises allowed/blocked transitions for Week 10 assessment.
+
+---
+
+# Week 10 — Layered Architecture, MVC, Components & Connectors
+
+### Four-Layer Architecture
+**Presentation → Application → Domain → Infrastructure**
+
+- **Domain:** pure business logic (`Order`, `LineItem`, `Money`, States, Menu).
+- **Application:** `CheckoutService` orchestrates pricing & receipt formatting.
+- **Infrastructure:**
+    - `InMemoryOrderRepository`
+    - Legacy printer adapter
+    - EventBus
+- **Presentation/UI:**
+    - `OrderController` (no formatting)
+    - `ConsoleView` (printing only)
+
+### MVC Console Demo
+`Week10Demo_MVC` demonstrates:
+- Create order
+- Add items
+- Checkout via application service
+- View prints the receipt
+- Proves UI is cleanly separated from logic.
+
+### Components & Connectors (EventBus)
+- Added lightweight `EventBus`:
+    - `on(eventType, handler)`
+    - `emit(event)`
+- Events: `OrderCreated`, `OrderPaid`.
+- `EventWiringDemo` shows UI reacting to events without tight coupling.
+
+### Architecture Reflection
+- Layered Monolith chosen for simplicity + maintainability.
+- Clear seams for future microservices: Payments, Notifications, Printers, Orders.
+- Future connectors: REST APIs or event streams.
+- Current EventBus simulates asynchronous communication cleanly.
+
+---
 
 
