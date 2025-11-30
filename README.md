@@ -4,6 +4,8 @@ A small, test-driven **Point of Sale** app for a café, built incrementally acro
 
 > **Tech:** Java 21 • Maven • JUnit 5 • PlantUML
 
+
+- https://github.com/Spuddytime/CafePOS
 ---
 
 ### Group 44
