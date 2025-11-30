@@ -3,7 +3,7 @@ package com.cafepos.state;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-final class OrderFsmTest {
+final class OrderFSMTest {
     @Test
     void happy_path_reaches_delivered() {
         OrderFSM fsm = new OrderFSM();

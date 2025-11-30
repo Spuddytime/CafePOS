@@ -14,7 +14,7 @@ public final class Menu extends MenuComponent {
         this.name = name;
     }
 
-    // --- composite operations ---
+    //  composite operations
     @Override public void add(MenuComponent c) { children.add(c); }
     @Override public void remove(MenuComponent c) { children.remove(c); }
     @Override public MenuComponent getChild(int i) { return children.get(i); }
